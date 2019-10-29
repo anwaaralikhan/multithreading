@@ -126,3 +126,5 @@ Eric
 59733 silver badges88 bronze badges
 3
 So onSpinWait() is the right thing if we expect the other thread to already run on a different CPU (core) fulfilling the condition whereas yield() is the right thing if we expect the other thread not having CPU time. Unfortunately, we can’t know, so the example code shown in the question uses some random based heuristic to decide when to invoke which method. 
+
+https://stackoverflow.com/questions/56056711/threadyield-vs-threadonspinwait

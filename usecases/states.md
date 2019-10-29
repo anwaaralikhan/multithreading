@@ -1,7 +1,4 @@
-A thread is in WAITING state goes in BLOCK state,until it acquires monitor by notify and become RUNNABLE.
-
-Same applies for TIMEDWAITING,it goes in BLOCK state,if monitor is hold by some other thread,even though specified time has passed.(your diagram need to be corrected)
-
+### Answer 01
 
 Once a thread gets awoken from a notify (or even from a spurious wakeup) it needs to relock the monitor of the object on which it was waiting. This is the BLOCKED state.
 
@@ -15,6 +12,12 @@ and `Object#wait()`
 
 The thread then waits until it can re-obtain ownership of the monitor and resumes execution.
 
-
 ![Thread States](https://github.com/anwaaralikhan/multithreading/blob/master/usecases/pictures/thread_states.png)
+
+### Answer 02
+
+A thread is in **WAITING** state goes in **BLOCK** state, until it acquires monitor by notify and become **RUNNABLE**.
+
+Same applies for **TIMEDWAITING**, It goes in **BLOCK** state, if monitor is hold by some other thread,even though specified time has passed.(your diagram need to be corrected)
+
 

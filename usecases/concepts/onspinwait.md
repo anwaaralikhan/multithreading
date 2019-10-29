@@ -1,5 +1,5 @@
 
-Goals
+### Goals
 
 Define an API that would allow Java code to hint to the run-time system that it is in a spin loop. The API will be a pure hint, and will carry no semantic behaviour requirements (for example, a no-op is a valid implementation). Allow the JVM to benefit from spin loop specific behaviours that may be useful on certain hardware platforms. Provide both a no-op implementation and an intrinsic implementation in the JDK, and demonstrate an execution benefit on at least one major hardware platform.
 

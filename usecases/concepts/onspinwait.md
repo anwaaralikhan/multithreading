@@ -5,8 +5,9 @@
 
 > Indicates that the caller is momentarily unable to progress, until the occurrence of one or more actions on the part of other activities.
 
-Let's understand from a example, which does not completely highlight its purpose but will help in understanding the concept.
 
+#### Example 1
+Let's understand from a example, which does not completely highlight its purpose but will help in understanding the concept.
 let's say you have a program that checks for new emails and notifies the user:
 
 ```

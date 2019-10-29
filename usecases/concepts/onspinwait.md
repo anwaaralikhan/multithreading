@@ -1,4 +1,12 @@
 
+Goals
+
+Define an API that would allow Java code to hint to the run-time system that it is in a spin loop. The API will be a pure hint, and will carry no semantic behaviour requirements (for example, a no-op is a valid implementation). Allow the JVM to benefit from spin loop specific behaviours that may be useful on certain hardware platforms. Provide both a no-op implementation and an intrinsic implementation in the JDK, and demonstrate an execution benefit on at least one major hardware platform.
+
+There are many times a thread must be suspended until something outside its scope changes. A (once) common practice was the wait() notify() pattern where there's one thread waiting for the other thread to wake them up.
+
+There is a big limitation to this, namely, the other thread must be aware that there might be waiting threads and should notify. If the work of the other thread is outside your control, there's no way to get notified.
+
 ## SpinWait
 
 ### While learning Java 9 I came across a new method of Thread class, called onSpinWait​. According to javadocs, this method is used for this:
@@ -128,3 +136,43 @@ Eric
 So onSpinWait() is the right thing if we expect the other thread to already run on a different CPU (core) fulfilling the condition whereas yield() is the right thing if we expect the other thread not having CPU time. Unfortunately, we can’t know, so the example code shown in the question uses some random based heuristic to decide when to invoke which method. 
 
 https://stackoverflow.com/questions/56056711/threadyield-vs-threadonspinwait
+https://stackoverflow.com/questions/56056711/threadyield-vs-threadonspinwait
+
+
+### GOOD 1
+
+When blocking a thread, there are a few strategies to choose from: spin, wait() / notify(), or a combination of both. Pure spinning on a variable is a very low latency strategy but it can starve other threads that are contending for CPU time. On the other hand, wait() / notify() will free up the CPU for other threads but can cost thousands of CPU cycles in latency when descheduling/scheduling threads.
+
+So how can we avoid pure spinning as well as the overhead associated with descheduling and scheduling the blocked thread?
+
+Thread.yield() is a hint to the thread scheduler to give up its time slice if another thread with equal or higher priority is ready. This avoids pure spinning but doesn't avoid the overhead of rescheduling the thread.
+
+The latest addition is Thread.onSpinWait() which inserts architecture-specific instructions to hint the processor that a thread is in a spin loop. On x86, this is probably the PAUSE instruction, on aarch64, this is the YIELD instruction.
+
+What's the use of these instructions? In a pure spin loop, the processor will speculatively execute the loop over and over again, filling up the pipeline. When the variable the thread is spinning on finally changes, all that speculative work will be thrown out due to memory order violation. What a waste!
+
+A hint to the processor could prevent the pipeline from speculatively executing the spin loop until prior memory instructions are committed. In the context of SMT (hyperthreading), this is useful as the pipeline will be freed up for other hardware threads.
+
+
+
+It's the same (and probably compiles to) as the x86 opcode PAUSE and equivalent the Win32 macro YieldProcessor, GCC's __mm_pause() and the C# method Thread.SpinWait
+
+It's a very weakened form of yielding: it tells your CPU that you are in a loop that may burn many CPU-cycles waiting for something to happen (busy-waiting).
+
+This way, The CPU can assign more resources to other threads, without actually loading the OS scheduler and dequeuing a ready-to-run thread (which may be expensive).
+
+a common use for that is spin-locking, when you know the contention on a shared memory is very infrequent or finishes very quickly, a spinlock may preform better than an ordinary lock.
+
+Pseudo code for such can look like:
+
+int state = 0; //1 - locked, 0 - unlocked
+
+routine lock:
+    while state.cas(new_value=1, wanted_value=0) == false //if state is 0 (unlocked), store 1 (locked) and return true, otherwise just return false.
+       yield
+
+routine unlock:
+    atomic_store(state,0)
+yield can be implemented wuth Thread.onSpinWait(), hinting that while trying to lock the lock, the CPU can give more resources to other threads.
+
+This technique of yielding is extremely common and popular when implementing a lock-free algorithm, since most of them depend on busy-waiting (which is implemented almost always as an atomic compare-and-swap loop). this has every real-world use you can imagine.

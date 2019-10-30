@@ -1,3 +1,7 @@
+**WAIT** - I'm waiting to be given some work, so I'm idle right now.
+**BLOCKED** - I'm busy trying to get work done but another thread is standing in my way, so I'm idle right now.
+
+
 ### Answer 01
 
 Once a thread gets awoken from a notify (or even from a spurious wakeup) it needs to relock the monitor of the object on which it was waiting. This is the BLOCKED state.

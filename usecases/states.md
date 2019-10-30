@@ -39,4 +39,5 @@ Same applies for **TIMEDWAITING**, It goes in **BLOCK** state, if monitor is hol
 
 
 https://stackoverflow.com/questions/35938395/difference-between-thread-state-blocked-and-waiting?noredirect=1&lq=1
+
 https://stackoverflow.com/questions/15680422/difference-between-wait-and-blocked-thread-states

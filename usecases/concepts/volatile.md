@@ -23,7 +23,7 @@ So even though you declare variable to volatile it will not make this operation 
 
 
 1. The volatile keyword in Java is only application to a variable and using volatile keyword with class and method is illegal.
-2. volatile keyword in Java guarantees that value of the volatile variable will always be read from main memory and not from Thread's local cache.
+2. `volatile keyword in Java guarantees that value of the volatile variable will always be read from main memory and not from Thread's local cache`.
 3. In Java reads and writes are atomic for all variables declared using Java volatile keyword (including long and double variables).
 4. Using the volatile keyword in Java on variables reduces the risk of memory consistency errors because any write to a volatile variable in Java establishes a happens-before relationship with subsequent reads of that same variable.
 5. From Java 5 changes to a volatile variable are always visible to other threads. What's more, it also means that when a thread reads a volatile variable in Java, it sees not just the latest change to the volatile variable but also the side effects of the code that led up the change.

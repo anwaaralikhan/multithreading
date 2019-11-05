@@ -24,13 +24,13 @@ guarantees that when a thread A sees change in volatile variable made by thread 
 prevents compiler optimization based on assumption that only one thread can change the variable (think tight loop while (l != 0) {}.
 
 
-
+### Answer 3
 
 On the specification
 Here's the relevant section reproduced here for quick reference:
 
-JLS 17.7 Non-atomic Treatment of double and long
-Some implementations may find it convenient to divide a single write action on a 64-bit long or double value into two write actions on adjacent 32 bit values. For efficiency's sake, this behavior is implementation specific; Java virtual machines are free to perform writes to long and double values atomically or in two parts.
+**JLS 17.7 Non-atomic Treatment of double and long**
+> Some implementations may find it convenient to divide a single write action on a 64-bit long or double value into two write actions on adjacent 32 bit values. For efficiency's sake, this behavior is implementation specific; Java virtual machines are free to perform writes to long and double values atomically or in two parts.
 
 For the purposes of the Java programming language memory model, a single write to a non-volatile long or double value is treated as two separate writes: one to each 32-bit half. This can result in a situation where a thread sees the first 32 bits of a 64 bit value from one write, and the second 32 bits from another write. Writes and reads of volatile long and double values are always atomic. Writes to and reads of references are always atomic, regardless of whether they are implemented as 32 or 64 bit values.
 

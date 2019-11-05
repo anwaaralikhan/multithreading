@@ -1,4 +1,17 @@
 
+There are two important concepts in multithreading environment.
+
+- atomicity
+- visibility
+
+Volatile eradicates visibility problem but it does not deal with atomicity. Volatile will prevent compiler to reorder the instruction which involves write and subsequent read of a volatile variable. e.g. `k++` Here `k++` is not a single machine instruction rather it is three machine instructions.
+
+* copy the value to register
+* increment it
+* place it back
+
+So even though you declare variable to volatile it will not make this operation atomic, which means another thread can see a intermediate result which is a stale or unwanted value for the other thread.
+
 1. The volatile keyword in Java is only application to a variable and using volatile keyword with class and method is illegal.
 2. volatile keyword in Java guarantees that value of the volatile variable will always be read from main memory and not from Thread's local cache.
 3. In Java reads and writes are atomic for all variables declared using Java volatile keyword (including long and double variables).

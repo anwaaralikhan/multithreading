@@ -1,3 +1,6 @@
-Spin Lock
-Wait, Notify, Notify All
-Yield, Sleep
+- Spin Lock
+- Wait
+- Notify
+- Notify All
+- Yield
+- Sleep

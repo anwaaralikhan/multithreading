@@ -1,9 +1,6 @@
 
 > The effect of the volatile keyword is approximately that each individual read or write operation on that variable is atomic.
 
-```
-Something to add, the int stored in AtomicInteger is private volatile int value;
-```
 There are two important concepts in multithreading environment.
 - atomicity
 - visibility
@@ -15,12 +12,9 @@ Volatile eradicates visibility problem but it does not deal with atomicity. Vola
 
 So even though you declare variable to volatile it will not make this operation atomic, which means another thread can see a intermediate result which is a stale or unwanted value for the other thread.
 
-
-
-
-
-
-
+```
+Something to add, the int stored in AtomicInteger is private volatile int value;
+```
 
 1. The volatile keyword in Java is only application to a variable and using volatile keyword with class and method is illegal.
 2. `volatile keyword in Java guarantees that value of the volatile variable will always be read from main memory and not from Thread's local cache`.

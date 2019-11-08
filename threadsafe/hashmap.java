@@ -6,7 +6,7 @@ class ThreadsafeHashMap<K, V> {
     private Lock rl = rwl.readLock();
     private Lock wl = rwl.writeLock();
 
-    public V get(K k) {
+    public V get(Object k) {
         rl.lock();
         try {
             return map.get(k);

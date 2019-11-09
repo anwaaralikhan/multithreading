@@ -25,6 +25,10 @@ class JoinItself extends Thread {
 
 /***
 
+The program will freeze, will not proceed as you call join method inside the method itself.
+
+Output ::
+
 false
 true
 Thread started ...

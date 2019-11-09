@@ -1,6 +1,19 @@
 // Java program to explain the 
 // concept of joining a thread. 
 import java.io.*; 
+
+
+/***
+Joining Threads in Java
+
+The join method allows one thread to wait for the completion of another. If t is a Thread object whose thread is currently executing,
+t.join();
+causes the current thread to pause execution until t's thread terminates. 
+
+java.lang.Thread class provides the join() method which allows one thread to wait until another thread completes its execution. 
+
+If t is a Thread object whose thread is currently executing, then t.join() will make sure that t is terminated before the next instruction is executed by the program.
+***/
   
 // Creating thread by creating the 
 // objects of that class 

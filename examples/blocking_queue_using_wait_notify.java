@@ -1,3 +1,5 @@
+//https://stackoverflow.com/questions/2536692/a-simple-scenario-using-wait-and-notify-in-java
+
 public class BlockingQueue<T> {
 
     private Queue<T> queue = new LinkedList<T>();

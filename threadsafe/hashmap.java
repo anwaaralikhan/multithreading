@@ -1,6 +1,7 @@
 class ThreadsafeHashMap<K, V> {
     
     private volatile Map<K, V> map = new HashMap<K, V>();
+    
     private ReadWriteLock rwl = new ReentrantReadWriteLock();
     
     private Lock rl = rwl.readLock();

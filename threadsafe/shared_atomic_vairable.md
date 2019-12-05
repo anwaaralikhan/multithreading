@@ -1,5 +1,5 @@
 
-`If you're simply sharing a counter, consider using an AtomicInteger or another suitable class from the java.util.concurrent.atomic package`
+> If you're simply sharing a counter, consider using an AtomicInteger or another suitable class from the java.util.concurrent.atomic package`
 
 ```
 public class Test {
